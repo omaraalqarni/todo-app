@@ -35,4 +35,5 @@ migration = Migrate(app, db)
 
 # launch app
 if __name__ == '__main__':
-    app.run()
+  app.run(ssl_context=('/ssl-certs/server.crt', '/ssl-certs/server.key'))
+
