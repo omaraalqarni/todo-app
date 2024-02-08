@@ -1,9 +1,5 @@
 
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
-
-
+from app import db
 class todoItem(db.Model):
     __tablename__ = 'todoItem'
     id = db.Column(db.Integer, primary_key=True)

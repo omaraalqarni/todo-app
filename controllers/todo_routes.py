@@ -1,10 +1,12 @@
-from app import app, db
-from jwt import JWT, jwt_required, get_jwt_identity
-from flask import request, jsonify
+from app import db
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask import request, jsonify, Blueprint
 from models import User, todoList, todoItem
 
+todo = Blueprint('todo', __name__)
+
 # create todo list
-@app.route('/lists', methods=['POST'])
+@todo.route('/lists', methods=['POST'])
 @jwt_required()
 def createList():
   title = request.json.get("title", None)
@@ -15,7 +17,7 @@ def createList():
   return jsonify(title=title),200
 
 # get all todo lists
-@app.route('/lists', methods=['GET'])
+@todo.route('/lists', methods=['GET'])
 @jwt_required()
 def getAllLists():
   user = get_jwt_identity()
@@ -23,14 +25,14 @@ def getAllLists():
   return jsonify([list.title for list in lists]), 200
 
 # get a single todo list
-@app.route('/lists/<int:id>', methods=['GET'])
+@todo.route('/lists/<int:id>', methods=['GET'])
 @jwt_required()
 def getAList(id):
   list = todoList.query.filter_by(id=id).first()
   return jsonify(title=list.title, items=[item.title for item in list.items.all()]), 200
 
 # update a todo list title
-@app.route('/lists/<int:id>', methods=['PUT'])
+@todo.route('/lists/<int:id>', methods=['PUT'])
 @jwt_required()
 def updateListTitle(id):
   title = request.json.get("title", None)
@@ -40,7 +42,7 @@ def updateListTitle(id):
   return jsonify(title=title), 200
 
 # add todo item to a list
-@app.route('/lists/<int:id>/items', methods=['POST'])
+@todo.route('/lists/<int:id>/items', methods=['POST'])
 @jwt_required()
 def addItem(id):
   title = request.json.get("title", None)
@@ -51,7 +53,7 @@ def addItem(id):
   return jsonify(title=title, done=done), 200
 
 # remove todo item from a list
-@app.route('/lists/<int:list_id>/items/<int:item_id>', methods=['DELETE'])
+@todo.route('/lists/<int:list_id>/items/<int:item_id>', methods=['DELETE'])
 @jwt_required()
 def removeItem(list_id, item_id):
   list = todoList.query.filter_by(id=list_id).first()
@@ -65,7 +67,7 @@ def removeItem(list_id, item_id):
   return jsonify(message="Item deleted"), 200
 
 # update todo item in a list
-@app.route('/lists/<int:list_id>/items/<int:item_id>', methods=['PUT'])
+@todo.route('/lists/<int:list_id>/items/<int:item_id>', methods=['PUT'])
 @jwt_required()
 def updateItem(list_id, item_id):
   title = request.json.get("title", None)
@@ -77,7 +79,7 @@ def updateItem(list_id, item_id):
   return jsonify(title=title, done=done), 200
 
 # delete a todo list
-@app.route('/lists/<int:id>', methods=['DELETE'])
+@todo.route('/lists/<int:id>', methods=['DELETE'])
 @jwt_required()
 def deleteList(id):
   list = todoList.query.filter_by(id=id).first()
