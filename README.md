@@ -22,15 +22,15 @@ Create a Flask API that utilizes SQLAlchemy for database operations, implements 
 **User CRUD Operations:**
 - [x] Create endpoints for creating, reading, updating, and deleting users.
 - [x] Ensure that only authenticated users can access these endpoints.
-- [] Implement authorization checks to allow only users to modify their own information.
+- [ ] Implement authorization checks to allow only users to modify their own information.
 
 **Implement Todo CRUD Operations:**
 - [x] Create endpoints for creating, reading, updating, and deleting todos.
 - [x] Ensure that only authenticated users can access these endpoints.
-- [] Implement authorization checks to allow only users to modify their own todos.
+- [ ] Implement authorization checks to allow only users to modify their own todos.
 
 **Protect Endpoints:**
-- [] Implement middleware or decorators to protect endpoints from unauthorized access.
+- [ ] Implement middleware or decorators to protect endpoints from unauthorized access.
 - [x] Use JWT tokens to authenticate and authorize users accessing protected endpoints. 
 
 **Run Flask API with HTTPS using TLS:**

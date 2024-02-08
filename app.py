@@ -1,21 +1,10 @@
-from flask import (
-  Flask, 
-  request, 
-  jsonify
-  )
-import hashlib
+from flask import Flask
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from flask_moment import Moment
 from config import secret_key
-from flask_jwt_extended import (
-  create_access_token,
-  get_jwt_identity,
-  jwt_required,
-  JWTManager,
-  )
+from flask_jwt_extended import JWTManager
+from models import db
 
-from models import db, User, todoList, todoItem
 
 
 # Create a Flask application object and configure it
@@ -35,5 +24,5 @@ migration = Migrate(app, db)
 
 # launch app
 if __name__ == '__main__':
-  app.run(ssl_context=('/ssl-certs/server.crt', '/ssl-certs/server.key'))
+  app.run(ssl_context=('ssl-certs/server.crt', 'ssl-certs/server.key'))
 
